@@ -1,0 +1,74 @@
+<div class="schedule-filter">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <div class="filter-row-frame" fxFlex="50%">
+      <div class="filter-frame">
+        <select class="filter-dropdown" (change)="changeDateFilter($event.target.selectedIndex)">
+          <option *ngFor="let date of dateFilter">
+            {{ date | monthYear }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="filter-row-frame" fxFlex="50%">
+      <div class="filter-frame">
+        <select class="filter-dropdown" (change)="changeCityFilter($event.target.selectedIndex)">
+          <option *ngFor="let city of cities">
+            {{ city.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-margin schedule">
+  <div class="schedule-frame weekdays" *ngFor="let weekday of weekdays">
+    <div class="schedule-text">
+      <p class="day-text">{{ weekday }}</p>
+    </div>
+  </div>
+
+  <div class="schedule-frame days" *ngFor="let calendarDay of calendarSchedule"
+       [ngClass]="{'weekday': calendarDay?.weekday,
+       'today': calendarDay?.today,
+       'not-this-month': !calendarDay?.thisMonth}">
+    <div class="schedule-text">
+      <div class="date-time">
+        <p class="day-text">{{ calendarDay.date_time | date:'d' }}</p>
+        <p class="day-text time" *ngIf="calendarDay.performance">{{ calendarDay?.performance?.date_time | time }}</p>
+      </div>
+      <div class="performance-title">
+        <p class="day-text">{{ calendarDay?.performance?.performance?.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="schedule-mobile">
+  <div class="schedule-mobile-frame" *ngFor="let schedule of schedule">
+    <div class="schedule-mobile-row" fxLayout="row" fxLayoutAlign="space-between">
+      <div fxFlex="initial">
+        <div fxLayout="row">
+          <div fxFlex="30px">
+            <p class="schedule-mobile-date">{{ schedule.date_time | date:'d' }}</p>
+          </div>
+          <div fxFlex="150px">
+            <p class="schedule-mobile-month">{{ schedule.date_time | month }}</p>
+            <p class="schedule-mobile-weekday">{{ schedule.date_time | weekDay }}</p>
+            <p class="schedule-mobile-time">{{ schedule.date_time | time }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-mobile-description" fxFlex>
+        <p class="schedule-mobile-performance-title">{{ schedule.performance.name }}</p>
+        <p>{{ schedule.performance.sort_description }}</p>
+      </div>
+    </div>
+    <div>
+      <button class="button detail-button" [routerLink]="['/performance', schedule.performance.pk]">Подробнее</button>
+      <a target="_blank" href={{schedule.ticket}}>
+        <button class="button buy-button">Купить билеты</button>
+      </a>
+    </div>
+  </div>
+</div>

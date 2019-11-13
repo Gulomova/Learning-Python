@@ -1,0 +1,37 @@
+<div *ngIf="performance">
+    <div class="page-margin">
+        <div class="image-container">
+            <img class="performance-image" src="{{ performance.photo_h }}">
+            <div class="performance-name">{{ performance.name | uppercase }}</div>
+            <div *ngIf="performance.schedule" class="performance-text">
+                <p class="performance-date">{{ performance.schedule.date_time | dateMonth }}</p>
+                <p class="performance-date">{{ performance.schedule.date_time | weekDay }}</p>
+                <p class="performance-date">{{ performance.schedule.date_time | time }}</p>
+                <p class="description-text">{{ performance.schedule.city }}, {{ performance.schedule.addresses }}</p>
+                <div>
+                    <a target="_blank" href={{performance.schedule.ticket}}>
+                        <button class="button buy-button">Купить билеты</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="description-frame" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+         fxLayoutAlign="space-between">
+        <div fxFlex="54%">
+            <p class="description-title">{{ performance.sort_description }}</p>
+            <p class="description-text">{{ performance.description }}</p>
+            <p class="description-text">Длительность {{ performance.duration }}</p>
+        </div>
+        <div fxFlex="44%">
+            <p class="description-title">Актеры:</p>
+            <div class="actors-list" *ngFor="let actor of performance.actors">
+                <p>{{ actor.full_name }}</p>
+            </div>
+            <p class="description-title">Режисер:</p>
+            <div class="actors-list"  *ngFor="let producer of performance.producer">
+                <p>{{ producer.full_name }}</p>
+            </div>
+        </div>
+    </div>
+</div>

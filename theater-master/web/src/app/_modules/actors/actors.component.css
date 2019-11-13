@@ -1,0 +1,45 @@
+.actor-frame {
+    max-width: 300px;
+    width: 30%;
+    height: 220px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: text-top;
+    overflow: hidden;
+    background-color: rgba(200, 200, 200, 0.3);
+    margin: 10px;
+    position: relative;
+}
+
+.actor-img {
+    max-height: 100%;
+}
+
+.name-frame {
+    position: absolute;
+    top: 70%;
+    width: 100%;
+    background-color: lightgray;
+    opacity: 0.8;
+}
+
+.name-text {
+    margin: 5px;
+}
+
+.position-text {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 999px) {
+  .actor-frame {
+    width: 44%;
+  }
+}
+
+@media only screen and (max-width: 699px) {
+  .actor-frame {
+    width: 90%;
+  }
+}

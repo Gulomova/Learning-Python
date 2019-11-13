@@ -1,0 +1,37 @@
+version: "2"
+services:
+  db:
+    image: postgres:9.6
+    expose:
+    - 5432
+    environment:
+    - POSTGRES_USER=theater
+    - POSTGRES_PASSWORD=ahqu4eeF
+    volumes:
+    - ./:/code
+
+  django:
+    image: gasoid/python3.5-postgresql
+    environment:
+    - DJANGO_SETTINGS_MODULE=theater.settings
+    volumes:
+    - ./:/code
+    working_dir: /code
+    links:
+    - db:db
+    expose:
+    - 9000
+    ports:
+    - "9000:9000"
+    command: /bin/bash -c "pip install -r requirements.txt && exec invoke run"
+
+  angular:
+    image: node:6.1.0
+    volumes:
+    - ./web:/web
+    working_dir: /web
+    ports:
+    - "3000:3000"
+    links:
+    - django
+    command: /bin/bash -c "npm install && npm start"

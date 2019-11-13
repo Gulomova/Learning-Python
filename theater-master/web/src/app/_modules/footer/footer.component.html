@@ -1,0 +1,45 @@
+<div class="footer-position" *ngIf="theater">
+  <div class="footer" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+       fxLayoutWrap="wrap" fxLayoutAlign="space-between">
+    <div fxLayoutWrap="wrap" fxFlex="49%">
+      <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start">
+        <div class="footer-element" fxLayoutWrap="wrap" fxFlex="59%">
+          <p class="footer-text"><b>МДТеатр</b></p>
+          <p class="footer-text">{{theater.name}}</p>
+        </div>
+        <div class="footer-element" fxLayoutWrap="wrap" fxFlex="39%">
+          <p class="footer-text">КОНТАКТЫ</p>
+          <span class="footer-text" *ngFor="let phone of theater.phones">
+            <p class="phone">{{ phone | phoneFormat }}</p>
+          </span>
+          <p class="footer-text">{{ theater.email }}</p>
+        </div>
+      </div>
+    </div>
+    <div fxLayoutWrap="wrap" fxFlex="49%">
+      <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="space-between start">
+        <div class="footer-element" fxLayoutWrap="wrap" fxFlex="59%">
+          <p class="footer-text">{{ theater.address }}</p>
+          <p class="footer-text">{{ theater.address_name }}</p>
+        </div>
+        <div class="footer-element" fxLayoutWrap="wrap" fxFlex="39%">
+          <a href={{theater.facebook_link}} target="_blank">
+            <button class="social-network">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </button>
+          </a>
+          <a href={{theater.vk_link}} target="_blank">
+            <button class="social-network">
+              <i class="fa fa-vk" aria-hidden="true"></i>
+            </button>
+          </a>
+          <a href={{theater.instagram_link}} target="_blank">
+            <button class="social-network">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "http://django:9000",
+    "secure": false
+  },
+  "/media": {
+    "target": "http://django:9000",
+    "secure": false
+  }
+}

@@ -1,0 +1,22 @@
+<div class="nav-bar-position">
+    <ul class="nav-bar">
+        <li class="left"><a><b>МДТеатр</b></a></li>
+        <li class="right nav-bar-responsive" (click)="showMenu()">
+                <div class="hamburger-nav-menu" [ngClass]="{'open': mobileMenuSate == true}">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+        </li>
+        <span [ngClass]="{'nav-bar-mobile': mobileMenuSate == false}">
+            <span  class="mobile-menu">
+                <li class="menu-element"><a routerLink="/contacts" [routerLinkActive]="['active']">КОНТАКТЫ</a></li>
+                <li class="menu-element"><a routerLink="/news" [routerLinkActive]="['active']">НОВОСТИ</a></li>
+                <li class="menu-element"><a routerLink="/actors" [routerLinkActive]="['active']">ЛЮДИ ТЕАТРА</a></li>
+                <li class="menu-element"><a routerLink="/schedule" [routerLinkActive]="['active']">АФИША</a></li>
+                <li class="menu-element"><a routerLink="/theater" [routerLinkActive]="['active']">ТЕАТР</a></li>
+                <li class="menu-element"><a routerLink="/performance" [routerLinkActive]="['active']">ГЛАВНАЯ</a></li>
+            </span>
+        </span>
+    </ul>
+</div>

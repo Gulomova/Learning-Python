@@ -1,0 +1,186 @@
+.schedule {
+  text-align: left;
+  color: #FFFFFF;
+}
+
+.schedule-frame {
+  width: 13.6%;
+  display: inline-block;
+  vertical-align: text-top;
+  overflow: hidden;
+  position: relative;
+}
+
+.schedule-text {
+  margin: 5px;
+  height: 100%;
+}
+
+.weekdays {
+  border: 1px solid rgba(255,255,255,0);
+}
+
+.days {
+  height: 80px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.days:hover {
+  background: #FFA500;
+  color: #FFFFFF;
+}
+
+.not-this-month {
+  color: rgba(255,255,255,0.3);
+}
+
+.today {
+  background: #FFFFFF;
+  color: #5d5d5d;
+}
+
+.weekday {
+  background: rgba(255,255,255,0.3);
+}
+
+.date-time {
+  width: 31%;
+  height: 100%;
+  display: inline-block;
+  vertical-align: text-top;
+  overflow: hidden;
+  position: relative;
+}
+
+.performance-title {
+  width: 64%;
+  display: inline-block;
+  text-align: center;
+  vertical-align: text-top;
+  overflow: hidden;
+  position: relative;
+}
+
+.day-text {
+  margin: 0;
+}
+
+.time {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  font-size: 16px;
+}
+
+.schedule-mobile {
+  display: none;
+  color: #FFFFFF;
+}
+
+.filter-row-frame {
+  border: 1px solid rgba(255,255,255,0);
+}
+
+.filter-frame {
+  padding: 5px 20px;
+  background-color: #333333;
+}
+
+.filter-dropdown {
+  margin: 0 10%;
+  width: 80%;
+  padding: 5px 0;
+  color: #FFFFFF;
+  background-color: #333333;
+  border: #333333;
+}
+
+.schedule-mobile-frame {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.schedule-mobile-date{
+  margin: 5px 0;
+  color: #FFA500;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.schedule-mobile-month{
+  margin: 0;
+  color: #FFA500;
+  font-weight: bold;
+}
+
+.schedule-mobile-weekday {
+  margin: 0;
+  font-weight: bold;
+}
+
+.schedule-mobile-time{
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.schedule-mobile-description {
+  margin: 10px 0;
+}
+
+.schedule-mobile-description p {
+  margin: 0;
+}
+
+.schedule-mobile-performance-title {
+  width: 100%;
+  font-weight: bold;
+}
+
+.button {
+  width: 48%;
+  color: #FFFFFF;
+  margin-top: 10px;
+  padding: 7px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.detail-button {
+  border: 2px solid #FFFFFF;
+  background-color: transparent;
+}
+
+.detail-button:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.buy-button {
+  border: 2px solid #FFA500;
+  background-color: #FFA500;
+}
+
+.buy-button:hover {
+  box-shadow: 5px -5px 1px #FF8100;
+}
+
+@media screen and (max-width:999px) {
+  .time {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width:799px) {
+  .schedule {
+    display: none;
+  }
+  .schedule-mobile {
+    display: block;
+  }
+}
+
+@media screen and (max-width:399px) {
+  .schedule-mobile-row {
+    flex-direction: column!important;
+  }
+}

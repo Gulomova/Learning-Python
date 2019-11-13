@@ -1,0 +1,29 @@
+<div class="page-margin" *ngIf="theater">
+  <div class="theater-name">
+    <p>{{ theater.name | uppercase }}</p>
+    <p>{{ theater.short_name | uppercase }}</p>
+  </div>
+  <div class="image-container">
+    <section class="photos">
+      <img src="{{ theater.photo_1 }}">
+      <img src="{{ theater.photo_2 }}">
+      <img src="{{ theater.photo_3 }}">
+      <img src="{{ theater.photo_4 }}">
+      <img src="{{ theater.photo_5 }}">
+      <img src="{{ theater.photo_6 }}">
+      <img src="{{ theater.photo_7 }}">
+      <img src="{{ theater.photo_8 }}">
+    </section>
+  </div>
+</div>
+<div *ngIf="theater" class="description-frame" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+     fxLayoutAlign="space-between">
+  <div fxFlex="54%">
+    <p class="description-title">О ТЕАТРЕ</p>
+    <p class="description-text">{{ theater.description }}</p>
+  </div>
+  <div fxFlex="44%">
+    <p class="description-title">Режиссер театра Алексей Райт:</p>
+    <p class="description-text">{{ theater.author_description }}</p>
+  </div>
+</div>

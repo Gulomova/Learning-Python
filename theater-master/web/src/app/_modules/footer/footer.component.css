@@ -1,0 +1,55 @@
+.footer-position {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+.footer {
+  list-style-type: none;
+  overflow: hidden;
+  padding: 0 5%;
+}
+
+.footer-element {
+  padding: 10px 0;
+}
+
+.footer-text {
+  margin: 0;
+  padding: 2px;
+  width: 100%;
+  display: block;
+  font-size: 13px;
+}
+
+.phone {
+  margin: 0;
+  width: 100%;
+}
+
+.social-network {
+  margin: 8px;
+  padding: 8px;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border: 0;
+  border-radius: 15px;
+  color: #000000;
+}
+
+a {
+  color: #000000;
+}
+
+.social-network:hover {
+  background-color: #FFA500;
+}
+
+@media screen and (max-width: 699px) {
+  .footer-position {
+    position: inherit;
+  }
+}

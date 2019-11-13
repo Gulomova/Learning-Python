@@ -1,0 +1,27 @@
+<div class="page-margin" *ngIf="performances">
+    <div class="performance" *ngFor="let performance of performances | orderBy: 'pk': false">
+        <div class="performance-background">
+            <div class="performance-image">
+                <img [routerLink]="['/performance', performance.pk]" src="{{ performance.photo_v }}">
+            </div>
+            <div class="performance-text">
+                <h2>{{ performance.name | uppercase }}</h2>
+                <p>{{ performance.sort_description }}</p>
+            </div>
+            <div>
+                <button class="button detail-button" [routerLink]="['/performance', performance.pk]">Подробнее</button>
+                <a *ngIf="performance.schedule; else noTicket" target="_blank"
+                   href={{performance.schedule.ticket}}>
+                    <button class="button buy-button">Купить билеты</button>
+                </a>
+                <ng-template #noTicket>
+                    <button class="button buy-button" disabled>Купить билеты</button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

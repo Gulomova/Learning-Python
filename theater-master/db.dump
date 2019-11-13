@@ -1,0 +1,1658 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.5
+-- Dumped by pg_dump version 9.6.5
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: actor_actor; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE actor_actor (
+    id integer NOT NULL,
+    first_name character varying(50) NOT NULL,
+    last_name character varying(50) NOT NULL,
+    "position" character varying(50),
+    photo character varying(100) NOT NULL,
+    "order" integer NOT NULL,
+    CONSTRAINT actor_actor_order_check CHECK (("order" >= 0))
+);
+
+
+ALTER TABLE actor_actor OWNER TO theater;
+
+--
+-- Name: actor_actor_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE actor_actor_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE actor_actor_id_seq OWNER TO theater;
+
+--
+-- Name: actor_actor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE actor_actor_id_seq OWNED BY actor_actor.id;
+
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE auth_group OWNER TO theater;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_id_seq OWNER TO theater;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_group_permissions OWNER TO theater;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_permissions_id_seq OWNER TO theater;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE auth_permission OWNER TO theater;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_permission_id_seq OWNER TO theater;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE auth_user OWNER TO theater;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_groups OWNER TO theater;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_groups_id_seq OWNER TO theater;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_id_seq OWNER TO theater;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_user_permissions OWNER TO theater;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_user_permissions_id_seq OWNER TO theater;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE django_admin_log OWNER TO theater;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_admin_log_id_seq OWNER TO theater;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE django_content_type OWNER TO theater;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_content_type_id_seq OWNER TO theater;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_migrations OWNER TO theater;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_migrations_id_seq OWNER TO theater;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_session OWNER TO theater;
+
+--
+-- Name: mdt_theater; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE mdt_theater (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    description text NOT NULL,
+    author_description text NOT NULL,
+    phones character varying(15)[] NOT NULL,
+    email character varying(254) NOT NULL,
+    address character varying(55) NOT NULL,
+    address_name character varying(55) NOT NULL,
+    ticket_window character varying(55) NOT NULL,
+    facebook_link character varying(55) NOT NULL,
+    vk_link character varying(55) NOT NULL,
+    instagram_link character varying(55) NOT NULL,
+    photo_1 character varying(100) NOT NULL,
+    photo_2 character varying(100) NOT NULL,
+    photo_3 character varying(100) NOT NULL,
+    photo_4 character varying(100) NOT NULL,
+    photo_5 character varying(100) NOT NULL,
+    photo_6 character varying(100) NOT NULL,
+    photo_7 character varying(100) NOT NULL,
+    photo_8 character varying(100) NOT NULL,
+    short_name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE mdt_theater OWNER TO theater;
+
+--
+-- Name: mdt_theater_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE mdt_theater_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mdt_theater_id_seq OWNER TO theater;
+
+--
+-- Name: mdt_theater_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE mdt_theater_id_seq OWNED BY mdt_theater.id;
+
+
+--
+-- Name: news_news; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE news_news (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    date_time timestamp with time zone NOT NULL,
+    description text NOT NULL,
+    phone character varying(13) NOT NULL
+);
+
+
+ALTER TABLE news_news OWNER TO theater;
+
+--
+-- Name: news_news_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE news_news_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE news_news_id_seq OWNER TO theater;
+
+--
+-- Name: news_news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE news_news_id_seq OWNED BY news_news.id;
+
+
+--
+-- Name: performance_performance; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE performance_performance (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    duration character varying(50) NOT NULL,
+    sort_description character varying(255) NOT NULL,
+    description text NOT NULL,
+    photo_v character varying(100) NOT NULL,
+    photo_h character varying(100) NOT NULL,
+    "order" integer NOT NULL,
+    CONSTRAINT performance_performance_order_check CHECK (("order" >= 0))
+);
+
+
+ALTER TABLE performance_performance OWNER TO theater;
+
+--
+-- Name: performance_performance_actors; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE performance_performance_actors (
+    id integer NOT NULL,
+    performance_id integer NOT NULL,
+    actor_id integer NOT NULL
+);
+
+
+ALTER TABLE performance_performance_actors OWNER TO theater;
+
+--
+-- Name: performance_performance_actors_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE performance_performance_actors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE performance_performance_actors_id_seq OWNER TO theater;
+
+--
+-- Name: performance_performance_actors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE performance_performance_actors_id_seq OWNED BY performance_performance_actors.id;
+
+
+--
+-- Name: performance_performance_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE performance_performance_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE performance_performance_id_seq OWNER TO theater;
+
+--
+-- Name: performance_performance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE performance_performance_id_seq OWNED BY performance_performance.id;
+
+
+--
+-- Name: performance_performance_producer; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE performance_performance_producer (
+    id integer NOT NULL,
+    performance_id integer NOT NULL,
+    actor_id integer NOT NULL
+);
+
+
+ALTER TABLE performance_performance_producer OWNER TO theater;
+
+--
+-- Name: performance_performance_producer_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE performance_performance_producer_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE performance_performance_producer_id_seq OWNER TO theater;
+
+--
+-- Name: performance_performance_producer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE performance_performance_producer_id_seq OWNED BY performance_performance_producer.id;
+
+
+--
+-- Name: schedule_schedule; Type: TABLE; Schema: public; Owner: theater
+--
+
+CREATE TABLE schedule_schedule (
+    id integer NOT NULL,
+    date_time timestamp with time zone NOT NULL,
+    ticket character varying(200) NOT NULL,
+    performance_id integer NOT NULL,
+    addresses character varying(255),
+    city character varying(15) NOT NULL
+);
+
+
+ALTER TABLE schedule_schedule OWNER TO theater;
+
+--
+-- Name: schedule_schedule_id_seq; Type: SEQUENCE; Schema: public; Owner: theater
+--
+
+CREATE SEQUENCE schedule_schedule_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE schedule_schedule_id_seq OWNER TO theater;
+
+--
+-- Name: schedule_schedule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: theater
+--
+
+ALTER SEQUENCE schedule_schedule_id_seq OWNED BY schedule_schedule.id;
+
+
+--
+-- Name: actor_actor id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY actor_actor ALTER COLUMN id SET DEFAULT nextval('actor_actor_id_seq'::regclass);
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: mdt_theater id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY mdt_theater ALTER COLUMN id SET DEFAULT nextval('mdt_theater_id_seq'::regclass);
+
+
+--
+-- Name: news_news id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY news_news ALTER COLUMN id SET DEFAULT nextval('news_news_id_seq'::regclass);
+
+
+--
+-- Name: performance_performance id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance ALTER COLUMN id SET DEFAULT nextval('performance_performance_id_seq'::regclass);
+
+
+--
+-- Name: performance_performance_actors id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_actors ALTER COLUMN id SET DEFAULT nextval('performance_performance_actors_id_seq'::regclass);
+
+
+--
+-- Name: performance_performance_producer id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_producer ALTER COLUMN id SET DEFAULT nextval('performance_performance_producer_id_seq'::regclass);
+
+
+--
+-- Name: schedule_schedule id; Type: DEFAULT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY schedule_schedule ALTER COLUMN id SET DEFAULT nextval('schedule_schedule_id_seq'::regclass);
+
+
+--
+-- Data for Name: actor_actor; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY actor_actor (id, first_name, last_name, "position", photo, "order") FROM stdin;
+3	Алена	Платонова	\N	photos/Алена_Платонова.jpg	2
+4	Алиса	Нестерова	\N	photos/Алиса_Нестерова.jpg	3
+5	Анастасия	Довгополова	\N	photos/Анастасия_Довгополова.jpg	4
+6	Анастасия	Колесникова	\N	photos/Анастасия_Колесникова.jpg	5
+7	Артур	Стремецкий	\N	photos/Артур_Стремецкий.jpg	6
+8	Геннадий	Выпинашко	\N	photos/Геннадий_Выпинашко.jpg	7
+9	Евгений	Шинкарев	\N	photos/Евгений_Шинкарев.jpg	8
+10	Елизавета	Любимова	\N	photos/Елизавета_Любимова.jpg	9
+11	Иван	Янченко	\N	photos/Иван_Янченко.jpg	10
+12	Марта	Донцова	\N	photos/Марта_Донцова.jpg	11
+13	Наталья	Дяденко	\N	photos/Наталья_Дяденко.jpg	12
+14	Сергей	Анипченко	\N	photos/Сергей_Анипченко.jpg	13
+15	Сергей	Вавилов	\N	photos/Сергей_Вавилов.jpg	14
+16	Тимур	Громыко	\N	photos/Тимур_Громыко.jpg	15
+1	Алексей	Райт	Режиссер	photos/Алексей_Райт.jpg	0
+2	Богдан	Адаменко	\N	photos/Богдан_Адаменко.jpg	1
+\.
+
+
+--
+-- Name: actor_actor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('actor_actor_id_seq', 17, true);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add permission	2	add_permission
+5	Can change permission	2	change_permission
+6	Can delete permission	2	delete_permission
+7	Can add group	3	add_group
+8	Can change group	3	change_group
+9	Can delete group	3	delete_group
+10	Can add user	4	add_user
+11	Can change user	4	change_user
+12	Can delete user	4	delete_user
+13	Can add content type	5	add_contenttype
+14	Can change content type	5	change_contenttype
+15	Can delete content type	5	delete_contenttype
+16	Can add session	6	add_session
+17	Can change session	6	change_session
+18	Can delete session	6	delete_session
+19	Can add actor	7	add_actor
+20	Can change actor	7	change_actor
+21	Can delete actor	7	delete_actor
+22	Can add news	8	add_news
+23	Can change news	8	change_news
+24	Can delete news	8	delete_news
+25	Can add theater	9	add_theater
+26	Can change theater	9	change_theater
+27	Can delete theater	9	delete_theater
+28	Can add performance	10	add_performance
+29	Can change performance	10	change_performance
+30	Can delete performance	10	delete_performance
+31	Can add schedule	11	add_schedule
+32	Can change schedule	11	change_schedule
+33	Can delete schedule	11	delete_schedule
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 33, true);
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$36000$l3CdwK4YQnea$O1FHzeouANgTJhKArGVKzYkx6IqZ28N4rERdTTyt4cU=	2018-02-25 19:45:48.045132+00	t	admin			admin@gmail.com	t	t	2017-11-13 19:02:26.991133+00
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2017-11-13 19:02:55.92194+00	1	Вакансия	1	[{"added": {}}]	8	1
+2	2017-11-13 19:02:55.934332+00	2	Вакансия	1	[{"added": {}}]	8	1
+3	2017-11-16 13:48:35.482962+00	1	Алексей Райт	1	[{"added": {}}]	7	1
+4	2017-11-16 13:49:15.450119+00	2	Богдан Адаменко	1	[{"added": {}}]	7	1
+5	2017-11-16 13:49:15.451165+00	3	Богдан Адаменко	1	[{"added": {}}]	7	1
+6	2017-11-16 13:49:41.505155+00	3	Богдан Адаменко	3		7	1
+7	2017-11-16 13:50:28.461015+00	4	Алена Платонова	1	[{"added": {}}]	7	1
+8	2017-11-16 13:50:54.898116+00	5	Алиса Нестерова	1	[{"added": {}}]	7	1
+9	2017-11-16 13:51:30.464904+00	6	Анастасия Довгополова	1	[{"added": {}}]	7	1
+10	2017-11-16 13:52:01.699219+00	7	Анастасия Колесникова	1	[{"added": {}}]	7	1
+11	2017-11-16 13:52:28.019989+00	8	Артур Стремецкий	1	[{"added": {}}]	7	1
+12	2017-11-16 13:53:11.738333+00	9	Геннадий Выпинашко	1	[{"added": {}}]	7	1
+13	2017-11-16 13:53:37.199503+00	10	Евгений Шинкарев	1	[{"added": {}}]	7	1
+14	2017-11-16 13:54:05.339499+00	11	Елизавета Любимова	1	[{"added": {}}]	7	1
+15	2017-11-16 13:54:36.277615+00	12	Иван Янченко	1	[{"added": {}}]	7	1
+16	2017-11-16 13:55:01.567654+00	13	Марта Донцова	1	[{"added": {}}]	7	1
+17	2017-11-16 13:55:26.065292+00	14	Наталья Дяденко	1	[{"added": {}}]	7	1
+18	2017-11-16 13:55:47.791068+00	15	Сергей Анипченко	1	[{"added": {}}]	7	1
+19	2017-11-16 13:56:09.305286+00	16	Сергей Вавилов	1	[{"added": {}}]	7	1
+20	2017-11-16 13:56:44.106169+00	17	Тимур Громыко	1	[{"added": {}}]	7	1
+21	2017-11-16 14:00:10.599349+00	1	Ужин с дураком	1	[{"added": {}}]	9	1
+22	2017-11-16 14:03:49.384809+00	2	Ветеран	1	[{"added": {}}]	9	1
+23	2017-11-16 14:06:05.198025+00	3	Женитьба	1	[{"added": {}}]	9	1
+24	2017-11-16 14:06:50.878987+00	4	Мой убийца Рогожин	1	[{"added": {}}]	9	1
+25	2017-11-16 14:09:50.777474+00	5	Злой спектакль	1	[{"added": {}}]	9	1
+26	2017-11-16 14:10:02.814521+00	5	Злой спектакль	2	[{"changed": {"fields": ["sort_description"]}}]	9	1
+27	2017-11-16 14:12:16.288815+00	6	Печальный спектакль	1	[{"added": {}}]	9	1
+28	2018-01-08 17:50:36.696708+00	1	Ужин с дураком	1	[{"added": {}}]	10	1
+29	2018-01-08 18:03:24.055047+00	2	Ужин с дураком	1	[{"added": {}}]	10	1
+30	2018-01-08 18:04:18.94755+00	3	Ужин с дураком	1	[{"added": {}}]	10	1
+31	2018-01-08 18:06:22.962038+00	7	Голые	1	[{"added": {}}]	9	1
+32	2018-01-08 18:06:57.463313+00	4	Голые	1	[{"added": {}}]	10	1
+33	2018-01-08 18:07:37.933791+00	5	Голые	1	[{"added": {}}]	10	1
+34	2018-01-08 18:09:54.096257+00	6	Печальный спектакль	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+35	2018-01-08 18:10:12.014543+00	5	Злой спектакль	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+36	2018-01-08 18:10:29.880476+00	4	Мой убийца Рогожин	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+37	2018-01-08 18:10:48.113381+00	3	Женитьба	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+38	2018-01-08 18:11:05.310375+00	2	Ветеран	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+39	2018-01-08 18:11:23.652357+00	1	Ужин с дураком	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+40	2018-01-08 18:18:01.873998+00	7	Голые	2	[{"changed": {"fields": ["photo_v", "photo_h"]}}]	9	1
+41	2018-01-08 18:54:41.275215+00	7	Голые	2	[{"changed": {"fields": ["duration"]}}]	9	1
+42	2018-01-08 18:54:58.755533+00	6	Печальный спектакль	2	[{"changed": {"fields": ["duration"]}}]	9	1
+43	2018-01-08 18:55:08.544064+00	5	Злой спектакль	2	[{"changed": {"fields": ["duration"]}}]	9	1
+44	2018-01-08 18:55:18.632063+00	4	Мой убийца Рогожин	2	[{"changed": {"fields": ["duration"]}}]	9	1
+45	2018-01-08 18:55:27.359471+00	3	Женитьба	2	[{"changed": {"fields": ["duration"]}}]	9	1
+46	2018-01-08 18:55:36.108895+00	2	Ветеран	2	[{"changed": {"fields": ["duration"]}}]	9	1
+47	2018-01-08 18:55:44.582897+00	1	Ужин с дураком	2	[{"changed": {"fields": ["duration"]}}]	9	1
+48	2018-02-18 13:10:49.048435+00	1	Молодежный драматический театр  "МДТ"	1	[{"added": {}}]	11	1
+49	2018-02-18 13:15:23.890522+00	1	Молодежный драматический театр  "МДТ"	2	[{"changed": {"fields": ["phones"]}}]	11	1
+50	2018-02-18 17:25:24.912419+00	1	Молодежный драматический театр	2	[{"changed": {"fields": ["name", "short_name"]}}]	11	1
+51	2018-02-18 17:28:19.318314+00	1	Молодежный драматический театр	2	[{"changed": {"fields": ["photo_1", "photo_2", "photo_3", "photo_4", "photo_5", "photo_6", "photo_7", "photo_8"]}}]	11	1
+52	2018-02-25 20:27:35.745952+00	6	Печальный спектакль	2	[{"changed": {"fields": ["order"]}}]	10	1
+53	2018-02-25 20:27:35.818708+00	5	Злой спектакль	2	[{"changed": {"fields": ["order"]}}]	10	1
+54	2018-02-25 20:27:35.841076+00	4	Мой убийца Рогожин	2	[{"changed": {"fields": ["order"]}}]	10	1
+55	2018-02-25 20:27:35.862816+00	3	Женитьба	2	[{"changed": {"fields": ["order"]}}]	10	1
+56	2018-02-25 20:27:35.885524+00	2	Ветеран	2	[{"changed": {"fields": ["order"]}}]	10	1
+57	2018-02-25 20:27:35.907182+00	1	Ужин с дураком	2	[{"changed": {"fields": ["order"]}}]	10	1
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 57, true);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	actor	actor
+8	news	news
+9	mdt	theater
+10	performance	performance
+11	schedule	schedule
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 11, true);
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY django_migrations (id, app, name, applied) FROM stdin;
+1	actor	0001_initial	2018-02-25 18:55:37.300625+00
+2	actor	0002_auto_20171111_1551	2018-02-25 18:55:37.333228+00
+3	actor	0003_auto_20180225_1849	2018-02-25 18:55:37.566974+00
+4	contenttypes	0001_initial	2018-02-25 18:55:37.69969+00
+5	auth	0001_initial	2018-02-25 18:55:38.745178+00
+6	admin	0001_initial	2018-02-25 18:55:38.988676+00
+7	admin	0002_logentry_remove_auto_add	2018-02-25 18:55:39.043576+00
+8	contenttypes	0002_remove_content_type_name	2018-02-25 18:55:39.178554+00
+9	auth	0002_alter_permission_name_max_length	2018-02-25 18:55:39.245671+00
+10	auth	0003_alter_user_email_max_length	2018-02-25 18:55:39.344318+00
+11	auth	0004_alter_user_username_opts	2018-02-25 18:55:39.44037+00
+12	auth	0005_alter_user_last_login_null	2018-02-25 18:55:39.564561+00
+13	auth	0006_require_contenttypes_0002	2018-02-25 18:55:39.576179+00
+14	auth	0007_alter_validators_add_error_messages	2018-02-25 18:55:39.620979+00
+15	auth	0008_alter_user_username_max_length	2018-02-25 18:55:39.785877+00
+16	mdt	0001_initial	2018-02-25 18:55:39.918931+00
+17	mdt	0002_theater_photos	2018-02-25 18:55:39.977872+00
+18	mdt	0003_auto_20180218_1700	2018-02-25 18:55:40.286853+00
+19	mdt	0004_auto_20180218_1703	2018-02-25 18:55:40.493914+00
+20	mdt	0005_theater_short_name	2018-02-25 18:55:40.62875+00
+21	mdt	0006_auto_20180218_1738	2018-02-25 18:55:40.658538+00
+22	mdt	0007_auto_20180218_1824	2018-02-25 18:55:40.691117+00
+23	mdt	0008_auto_20180220_1802	2018-02-25 18:55:40.882848+00
+24	news	0001_initial	2018-02-25 18:55:41.082225+00
+25	performance	0001_initial	2018-02-25 18:55:41.60353+00
+26	performance	0002_auto_20171111_1553	2018-02-25 18:55:42.402004+00
+27	performance	0003_auto_20171113_1841	2018-02-25 18:55:42.444146+00
+28	performance	0004_auto_20171212_1525	2018-02-25 18:55:42.523159+00
+29	performance	0005_performance_photo_h	2018-02-25 18:55:42.611793+00
+30	performance	0006_auto_20180108_1843	2018-02-25 18:55:42.878491+00
+31	performance	0007_auto_20180108_1851	2018-02-25 18:55:43.022713+00
+32	performance	0008_auto_20180218_1828	2018-02-25 18:55:43.073741+00
+33	performance	0009_auto_20180218_1831	2018-02-25 18:55:43.154557+00
+34	schedule	0001_initial	2018-02-25 18:55:43.336256+00
+35	schedule	0002_auto_20180108_1748	2018-02-25 18:55:43.633178+00
+36	sessions	0001_initial	2018-02-25 18:55:44.32973+00
+45	performance	0010_auto_20180225_2017	2018-02-25 20:20:40.83414+00
+46	schedule	0003_auto_20180225_2017	2018-02-25 20:20:40.909648+00
+\.
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 46, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+t74gq87se77f7wts3227z2d5p5jsldj8	YzIxOWU2ODE4YWYxNWRhNjJlNDI0Y2IwYTM4OWIwMjJkYWJmZWJhMzp7Il9hdXRoX3VzZXJfaGFzaCI6Ijk1ZDVlZGU1NDE0NzE0OWFlNTYwODM4MzQxYzlhYzJhZjYwNGU1ZDgiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=	2017-11-27 19:02:37.524562+00
+pkzds8qfptedx03fezf53j9djgbnivyz	YzIxOWU2ODE4YWYxNWRhNjJlNDI0Y2IwYTM4OWIwMjJkYWJmZWJhMzp7Il9hdXRoX3VzZXJfaGFzaCI6Ijk1ZDVlZGU1NDE0NzE0OWFlNTYwODM4MzQxYzlhYzJhZjYwNGU1ZDgiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=	2017-11-27 19:02:37.525985+00
+hg8cxy0xyrvx12ymh7naqb1058ky26yr	ZGQyMDc1ZWQ5OTMyOWVhNDUyOGZhZTExZjNhYmQ4YjU4ZjhiNTU4ZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTVkNWVkZTU0MTQ3MTQ5YWU1NjA4MzgzNDFjOWFjMmFmNjA0ZTVkOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=	2017-11-30 13:17:21.0086+00
+ob4gpu25bqhlw94lgwsgnfxfqiokuizw	ZGQyMDc1ZWQ5OTMyOWVhNDUyOGZhZTExZjNhYmQ4YjU4ZjhiNTU4ZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTVkNWVkZTU0MTQ3MTQ5YWU1NjA4MzgzNDFjOWFjMmFmNjA0ZTVkOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=	2017-11-30 13:17:59.621474+00
+l20s9o1x5w3lysexcs4nv7iasve9kcyk	ZGQyMDc1ZWQ5OTMyOWVhNDUyOGZhZTExZjNhYmQ4YjU4ZjhiNTU4ZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTVkNWVkZTU0MTQ3MTQ5YWU1NjA4MzgzNDFjOWFjMmFmNjA0ZTVkOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=	2017-11-30 13:17:59.625573+00
+5ukjy8q4iliewwvoxd5qep2y009lh3lz	MTVmNjUzYjgyZmQwOGEzM2Q4MDI3NDFhYTcxYTFkNDc3NTg0OTNjNTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiOTVkNWVkZTU0MTQ3MTQ5YWU1NjA4MzgzNDFjOWFjMmFmNjA0ZTVkOCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2018-01-22 17:49:16.432147+00
+p4oipowoi3gzse5qjcm10zxj2qwortwo	MzI5ZDRkMGQwMzljNGUzM2JmNzM0YTA4NzEwNGVhZjFhYWQwOTVjODp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2hhc2giOiI5NWQ1ZWRlNTQxNDcxNDlhZTU2MDgzODM0MWM5YWMyYWY2MDRlNWQ4In0=	2018-03-04 13:05:27.436678+00
+04v70rflcs71ha05az8stdocbpmmbl4v	MjUyYjExZDUwMGVmOTNiMTJiMjA0YzkxMGE1YjU5NzAxYTM1MTQ3Mzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5NWQ1ZWRlNTQxNDcxNDlhZTU2MDgzODM0MWM5YWMyYWY2MDRlNWQ4In0=	2018-03-11 19:45:48.056229+00
+\.
+
+
+--
+-- Data for Name: mdt_theater; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY mdt_theater (id, name, description, author_description, phones, email, address, address_name, ticket_window, facebook_link, vk_link, instagram_link, photo_1, photo_2, photo_3, photo_4, photo_5, photo_6, photo_7, photo_8, short_name) FROM stdin;
+1	Молодежный драматический театр	Необычный молодежный театр из Харькова объединил много городов Украины и Европы и является одним из множества творческих коллективов национального университета "Юридическая академия имени Ярослава Мудрого", который по своему статусу является единственным в Украине профессиональным студенческим театром. МДТ неоднократно становился победителем и лауреатом студенческих и профессиональных международных театральных фестивалей.	"Главная идея состоит в том, чтобы пробудить для украинского зрителя окно в искусство. Мы стараемся вывести свою чистую форму искусства, настоящего, неподдельного, без пошлости, халтуры и всяких приемов, работающих как замануха для рядового зрителя."	{+380636800323,+380505840371}	info@theartmdt.com	г. Харьков ул. Пушкинская, 88	Дворец студентов НУ "ЮАУ имени Ярослава Мудрого"	Вторник - пятница: 15-00 до 19-00	https://www.facebook.com/theatremdt/	https://vk.com/ukraine_theatre/	https://instagram.com/mdtheatre_kh/	theater/marriage.jpg	theater/solar_line.jpeg	theater/dinner_with_a_fool.jpg	theater/interpreter.jpg	theater/evil_play.jpg	theater/natalia.jpg	theater/naked.JPG	theater/aglaia.jpg	"МДТ"
+\.
+
+
+--
+-- Name: mdt_theater_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('mdt_theater_id_seq', 1, true);
+
+
+--
+-- Data for Name: news_news; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY news_news (id, title, date_time, description, phone) FROM stdin;
+1	Вакансия	2017-11-13 19:02:55.920593+00	Нужен кот!	380994045148
+2	Вакансия	2017-11-13 19:02:55.929586+00	Нужен кот!	380994045148
+\.
+
+
+--
+-- Name: news_news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('news_news_id_seq', 2, true);
+
+
+--
+-- Data for Name: performance_performance; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY performance_performance (id, name, duration, sort_description, description, photo_v, photo_h, "order") FROM stdin;
+3	Женитьба	2 часа 30 минут с антрактом	?	?	photos/Женитьба.jpg	photos/Женитьба_zAbsB3j.jpg	6
+4	Мой убийца Рогожин	2 часа 30 минут с антрактом	?	?	photos/Мой_убийца_Рогожин.jpg	photos/Мой_убийца_Рогожин_d96Li5B.jpg	5
+6	Печальный спектакль	2 часа 30 минут с антрактом	?	Проект «Страсти по Идиот»\r\nДень третий  «Печальный спектакль»       \r\n                       \r\nАвтор пьесы - Клим (режиссер, педагог, философ, автор более пятидесяти текстов «о театре и для театра», лауреат премии ЮНЕСКО и «Золотая маска»)\r\n \r\nАГЛАЯ\r\n«...всю настоящего жития\r\nночь перейти...»\r\nили ПЕЧАЛЬНЫЙ СПЕКТАКЛЬ\r\n….все хорошо любимый\r\n… я здесь\r\n… я жду тебя\r\nАглая\r\nона же Эгла\r\n«звезда Аделаида»\r\n \r\nШвейцария. Привокзальное кафе. Аглая. Она возвращается из психиатрической лечебницы, где навещала князя Мышкина. Ещё один поезд, который она пропускает...\r\n \r\nО чём думает женщина, когда она уходит и не может уйти. Что чувствует Она, когда её жизнь пронизало Оно. Так называют то, что невозможно назвать... Оно, Бог, Безличное... необъяснимое... Так необъяснима, неизъяснима любовь, она - безконечное молчание... между слов, которых некому сказать... между двумя поездами, когда некуда ехать... Внутренний монолог, который мы чудом можем услышать... Тихий женский голос над тёмными водами всех забвений, разлук и неосуществлений... голос, уходящий ввысь...\r\n                                            \r\nСпектакль, который вам нужно увидеть.	photos/Печальный_спектакль.jpg	photos/Печальный_спектакль_gJRGBjm.jpg	3
+2	Ветеран	2 часа 30 минут с антрактом	Спектакль "Ветеран. Несуществующие главы романа "Идиот"	Театр МДТ \r\nПредставляет \r\nПроект «Страсти по Идиоту»\r\nКЛИМ - несуществующие главы романа Идиот\r\nДень четвертый  «Ветеран»\r\n \r\n« ...на что дан свЕт\r\nчеловеку которого путь закрЫт\r\nи которого Бог окружил мракОм..\r\nВЕТЕРАН\r\nили …вздохи моИ\r\nпредупреждают хлеб мОй…»\r\n \r\nАвтор пьесы - Клим (Владимир Клименко, режиссер, педагог, философ, автор более пятидесяти текстов «о театре и для театра», лауреат премии ЮНЕСКО и «Золотая маска»)\r\n \r\nАктер и режиссер  - Алексей Райт\r\n \r\nЗавершающий спектакль проекта Страсти по Идиоту. В этот раз вы увидите историю героя романа Идиот по имени Фердыщенко. Его страстно ненастное отстаивание истинного взгляда на эту идиотскую историю. Он попытается отвить на тот самы заветный вопрос “какое отношение имеет это история к нам”.\r\n \r\nВРЕМЯ СТРАСТЕЙ ЧЕЛОВЕЧЕСКИХ\r\n«Время напрасных книг, безнадежных и тяжелых, бесконечных и неизбежных, приходит тогда, когда времени не осталось. Его больше нет. Лишь тяжесть и невыносимость, бессмысленность и безнадежность. Воспоминание о том, что не сбылось. Когда нет ни одной причины, что бы жить, и чувствам ничего не остается, кроме них самих и слабого мерцания самоуничтожения в надежде сочинить свет там, где надежды уже не осталось. Именно тогда, когда все уже произошло, является не сознание, нет – чувство никогда неповторимого, что все уже было, - а предчувствие не бывавшего, не имеющего причины и условия бытия. Прачувство. Это не происхождение в иное, более похоже на бегство и эмиграцию, а то, что не случается и не может быть освобождено в необходимости. Ничто, превышающее свободу, но предстоящее распахнутым простором, ничего не знающем о том, что он уже открыт.» \r\n \r\nАктер и режиссер Алексей Райт, успешно играющий по всей Украине спектакль «Ужин с дураком», создал проект «Страсти по Идиоту». Ранее осуществил постановку спектаклей: «Дракон», «Ужин с дураком», «Монолог ангела или Е.Ж.», «Печальный спектакль», «Падший ангел», «Новеченто», «Однорукий из Спокана», «Сиротливый запад» и др. Спектакли идут на малой сцене Дворца студентов НЮУ им. Ярослава Мудрого и в ТКЦ (малый зал ХАТОБ).	photos/Ветеран.jpg	photos/Ветеран_KKz2lqJ.jpg	2
+7	Голые	2 часа 30 минут с антрактом	?	?	photos/Голые_s.jpg	photos/Голые_h.jpg	1
+1	Ужин с дураком	2 часа 30 минут с антрактом	Вы узнаете, что такое настоящая французская комедия.	Основа сюжета состоит в истории, которая произошла одним вечером:\r\nпредставьте, что сегодня у вас ужин с друзьями, обязательным условием\r\nкоторого является необходимость привести с собой … дурака! Дурак,\r\nестественно, не должен ни о чем догадаться. Суть такой шутки в том,\r\nчтобы развязать необычному гостю язык. Тот из участников ужина, кто\r\nприведет «лучшего» дурака – победитель! А теперь представьте, что у\r\nвас люмбалгия, от вас сбежала жена, вы скрываетесь от налогового\r\nинспектора, и тут приходится терпеть приглашенного дурака, который\r\nпоявится так не вовремя в данной ситуации…	photos/Ужин_с_дураком.jpg	photos/Ужин_с_дураком_NLj2UdX.jpg	0
+5	Злой спектакль	2 часа 30 минут с антрактом	?	Проект «Страсти по Идиот»\r\nнесуществующие главы романа Идиот\r\nДень первый «Злой спектакль»\r\nАвтор пьесы - Клим (режиссер, педагог, философ, автор более пятидесяти текстов «о театре и для театра», лауреат премии ЮНЕСКО и «Золотая маска»)\r\n\r\n«Злой спектакль» – первая часть четырех дневного проекта «Страсти по Идиоту» Алексея Райта по пьесам легендарного драматурга Клима (псевдоним Владимира Клименко). Злой спектакль» имеющий второе название: «…Лучше бы было этому человеку не рождаться…» -история которую возможно, мог бы рассказать один из его героев или случайных наблюдателей романа «Идиот» Ф.Достоевского. Актер и режиссер Алексей Райт (ранее совершил постановки «Дракон», «Ужин с дураком», «Монолог ангела или Е.Ж.», «Печальный спектакль», «Падший ангел», «Новеченто», «Однорукий из Спокана», «Сиротливый запад» и др) обращается вместе с драматургом Климом к переживания своей жизни Ипполитом и его взглядом на весь этот сюжет «Идиот»ского романа.\r\nСобственно он то пообещал что застрелится, и спектакля по сути быть не должно было, все кричал «ох застрелюсь! застрелюсь!». Собрал местных бездельников, а кишка тонка.\r\nчувствуете\r\nпоявляется\r\nмерзкий тончик\r\nдоморощенного и вечного не довольного\r\nместечкового революционера\r\nразновидности Раскольникова\r\nтолько слабохарактерного\r\nв романе «идиот» такой герой есть и монолог у него почти один в один как у Шекспира в Ромео и Джульетте мол всем дозволено и мухе которая жужит\r\nэто действо и называется «ЗЛОЙ СПЕКТАКЛЬ»\r\nСпектакль который вам нужно увидеть.	photos/Злой_спектакль.jpg	photos/Злой_спектакль_51UPL3w.jpg	4
+\.
+
+
+--
+-- Data for Name: performance_performance_actors; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY performance_performance_actors (id, performance_id, actor_id) FROM stdin;
+\.
+
+
+--
+-- Name: performance_performance_actors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('performance_performance_actors_id_seq', 13, true);
+
+
+--
+-- Name: performance_performance_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('performance_performance_id_seq', 7, true);
+
+
+--
+-- Data for Name: performance_performance_producer; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY performance_performance_producer (id, performance_id, actor_id) FROM stdin;
+1	1	1
+2	2	1
+3	3	1
+4	4	1
+5	5	1
+6	6	1
+7	7	1
+\.
+
+
+--
+-- Name: performance_performance_producer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('performance_performance_producer_id_seq', 7, true);
+
+
+--
+-- Data for Name: schedule_schedule; Type: TABLE DATA; Schema: public; Owner: theater
+--
+
+COPY schedule_schedule (id, date_time, ticket, performance_id, addresses, city) FROM stdin;
+1	2018-01-14 18:00:00+00	https://kharkov.internet-bilet.ua/events/19426/MDTeatr-Uzhin-s-durakom/	1	Дворец студентов НЮУ им. Ярослава Мудрого	KH
+2	2018-02-10 19:00:00+00	https://kharkov.internet-bilet.ua/events/20071/MDTeatr-Uzhin-s-durakom/	1	Дворец студентов НЮУ им. Ярослава Мудрого	KH
+3	2018-02-24 18:00:00+00	https://kharkov.internet-bilet.ua/events/19732/MDTeatr-Uzhin-s-durakom/	1	Дворец студентов НЮУ им. Ярослава Мудрого	KH
+4	2018-01-13 18:00:00+00	https://kharkov.internet-bilet.ua/events/19424/MDTeatr-Komediya-GOLIE/	7	ТЕАТРАЛЬНО-КОНЦЕРТНИЙ ЦЕНТР	KH
+5	2018-01-19 19:00:00+00	https://kharkov.internet-bilet.ua/events/19425/MDTeatr-Komediya-GOLIE/	7	ТЕАТРАЛЬНО-КОНЦЕРТНИЙ ЦЕНТР	KH
+\.
+
+
+--
+-- Name: schedule_schedule_id_seq; Type: SEQUENCE SET; Schema: public; Owner: theater
+--
+
+SELECT pg_catalog.setval('schedule_schedule_id_seq', 5, true);
+
+
+--
+-- Name: actor_actor actor_actor_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY actor_actor
+    ADD CONSTRAINT actor_actor_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: mdt_theater mdt_theater_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY mdt_theater
+    ADD CONSTRAINT mdt_theater_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news_news news_news_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY news_news
+    ADD CONSTRAINT news_news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: performance_performance_producer performance_performance__performance_id_actor_id_2d709f21_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_producer
+    ADD CONSTRAINT performance_performance__performance_id_actor_id_2d709f21_uniq UNIQUE (performance_id, actor_id);
+
+
+--
+-- Name: performance_performance_actors performance_performance__performance_id_actor_id_d778270c_uniq; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_actors
+    ADD CONSTRAINT performance_performance__performance_id_actor_id_d778270c_uniq UNIQUE (performance_id, actor_id);
+
+
+--
+-- Name: performance_performance_actors performance_performance_actors_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_actors
+    ADD CONSTRAINT performance_performance_actors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: performance_performance performance_performance_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance
+    ADD CONSTRAINT performance_performance_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: performance_performance_producer performance_performance_producer_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_producer
+    ADD CONSTRAINT performance_performance_producer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schedule_schedule schedule_schedule_pkey; Type: CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY schedule_schedule
+    ADD CONSTRAINT schedule_schedule_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: actor_actor_order_ebee4f22; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX actor_actor_order_ebee4f22 ON actor_actor USING btree ("order");
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: performance_performance_actors_actor_id_f51ef0d2; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX performance_performance_actors_actor_id_f51ef0d2 ON performance_performance_actors USING btree (actor_id);
+
+
+--
+-- Name: performance_performance_actors_performance_id_143e89a6; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX performance_performance_actors_performance_id_143e89a6 ON performance_performance_actors USING btree (performance_id);
+
+
+--
+-- Name: performance_performance_order_73658854; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX performance_performance_order_73658854 ON performance_performance USING btree ("order");
+
+
+--
+-- Name: performance_performance_producer_actor_id_77e44051; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX performance_performance_producer_actor_id_77e44051 ON performance_performance_producer USING btree (actor_id);
+
+
+--
+-- Name: performance_performance_producer_performance_id_b1b4850a; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX performance_performance_producer_performance_id_b1b4850a ON performance_performance_producer USING btree (performance_id);
+
+
+--
+-- Name: schedule_schedule_performance_id_53c91991; Type: INDEX; Schema: public; Owner: theater
+--
+
+CREATE INDEX schedule_schedule_performance_id_53c91991 ON schedule_schedule USING btree (performance_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: performance_performance_producer performance_performa_actor_id_77e44051_fk_actor_act; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_producer
+    ADD CONSTRAINT performance_performa_actor_id_77e44051_fk_actor_act FOREIGN KEY (actor_id) REFERENCES actor_actor(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: performance_performance_actors performance_performa_actor_id_f51ef0d2_fk_actor_act; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_actors
+    ADD CONSTRAINT performance_performa_actor_id_f51ef0d2_fk_actor_act FOREIGN KEY (actor_id) REFERENCES actor_actor(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: performance_performance_actors performance_performa_performance_id_143e89a6_fk_performan; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_actors
+    ADD CONSTRAINT performance_performa_performance_id_143e89a6_fk_performan FOREIGN KEY (performance_id) REFERENCES performance_performance(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: performance_performance_producer performance_performa_performance_id_b1b4850a_fk_performan; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY performance_performance_producer
+    ADD CONSTRAINT performance_performa_performance_id_b1b4850a_fk_performan FOREIGN KEY (performance_id) REFERENCES performance_performance(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: schedule_schedule schedule_schedule_performance_id_53c91991_fk_performan; Type: FK CONSTRAINT; Schema: public; Owner: theater
+--
+
+ALTER TABLE ONLY schedule_schedule
+    ADD CONSTRAINT schedule_schedule_performance_id_53c91991_fk_performan FOREIGN KEY (performance_id) REFERENCES performance_performance(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
