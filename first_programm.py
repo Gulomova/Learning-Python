@@ -1,24 +1,22 @@
-from urllib2 import urlopen         # из модуля urllib2 импортируем функцию urlopen
+from urllib2 import urlopen        
+u = urlopen("http://python.org")   
+words = {}                          
+                                    
+for line in u:          
+    line = line.strip(" \n")  
+    for word in line.split(" "): 
+        try:                            
+            words[word] += 1            
+        except KeyError:               
+            words[word] = 1             
 
-u = urlopen("http://python.org")    # открываем URL на чтение
-words = {}                          # связываем имя words с пустым словарём
-                                    # (словарь — неупорядоченный [[ассоциативный массив]])
-for line in u:          # читаем u по строкам
-    line = line.strip(" \n")    # отбрасываем начальные и конечные пробелы
-    for word in line.split(" "): # режем каждую строку на слова, ограниченные пробелами
-        try:                            # блок обработки исключений
-            words[word] += 1            # пытаемся увеличить words[word] на единицу
-        except KeyError:                # если не получилось (раньше words[word] не было)
-            words[word] = 1             # присваиваем единицу
 
-# теперь словарь words содержит частоту встречаемости каждого слова.
-# Например, words может содержать {"яблоко":5, "апельсин": 12, "груша": 8}
 
-pairs = words.items()               # делаем из словаря список пар
-                                    # pairs == [("яблоко",5), ("апельсин",12), ("груша",8)]
-pairs.sort(key=lambda x: x[1], reverse=True)  # сортируем по убыванию второго элемента пары
+pairs = words.items()              
+                                   
+pairs.sort(key=lambda x: x[1], reverse=True)  
 
-for p in pairs[:10]:                # печатаем первые 10 элементов списка
+for p in pairs[:10]:                
     print(p[0], p[1])
 
 
