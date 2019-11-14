@@ -1,8 +1,0 @@
-<div class="page-margin">
-    <div class="news-frame" *ngFor="let item of news">
-        <p class="news-date-text">{{ item.date_time | date : "dd.MM.yy"  }}</p>
-        <h3 class="news-title-text">{{ item.title | uppercase }}</h3>
-        <p class="news-text">{{ item.description }}</p>
-        <p class="news-text">Телефон: {{ item.phone | phoneFormat }}</p>
-    </div>
-</div>

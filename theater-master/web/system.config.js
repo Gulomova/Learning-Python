@@ -1,1 +1,0 @@
-map['@ngui/map'] = 'node_modules/@ngui/map/dist/map.umd.js';

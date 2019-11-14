@@ -1,9 +1,0 @@
-<div class="page-margin">
-    <div class="actor-frame" *ngFor="let actor of actors | orderBy: 'pk': false">
-        <img class="actor-img" src="{{ actor.photo }}">
-        <div class="name-frame">
-            <p class="name-text">{{ actor.first_name | uppercase }} {{ actor.last_name | uppercase }}</p>
-            <p class="position-text">{{ actor.position }}</p>
-        </div>
-    </div>
-</div>
