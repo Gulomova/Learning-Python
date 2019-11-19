@@ -1,4 +1,6 @@
-from urllib2 import urlopen         # из модуля urllib2 импортируем функцию urlopen
+
+0
+
 
 u = urlopen("http://python.org")    # открываем URL на чтение
 words = {}                          # связываем имя words с пустым словарём
