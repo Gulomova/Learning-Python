@@ -1,8 +1,19 @@
 <<<<<<< HEAD
-ksjbfvwkebvwekjvbwdmvwe,vwe
-=======
 
-0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 u = urlopen("http://python.org")    # открываем URL на чтение
